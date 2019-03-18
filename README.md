@@ -1,5 +1,17 @@
-# MSA_trimmer
-Straightforward &amp; minimalistic removal of poorly aligned regions in sequence alignments.
+# MSA_trimmer: Straightforward &amp; minimalistic removal of poorly aligned regions in **M**ultiple **S**equence **A**lignments
+This is a program to remove (trim) or mask columns of multiple sequence alignments in fasta format.
+Columns are removed if they exceed a user-specified "gappyness" treshold, i.e. a threshold of
+0.5 (``--trim_gappy 0.5``) would trim all columns where more than half of the sequences have a gap. You may also "hand-pick" columns
+or whole regions of the alignment to be trimmed (``--trim_positions``).
+
+If you want to preserve the original coordinates of the alignment, you may also chose to "mask" your alignment
+instead of trimming it. This will not remove any columns, instead the whole column will be replaced with
+a character of your choice (the gap character "-" by default).
+
+Trimming works for both nucleotide/codon/CDS (``-c``) and peptide (``-p``) alignments. You may even trim a pair
+of corresponding CDS and peptide alignments at the same time, to ensure the trimmed alignments will match. In that
+case, only whole codons (chunks of three bases each) will be removed in order not to introduce a frame shift.
+This is useful for applications that need a codon alignment such as CODEML.
 
     usage: alignment_trimmer.py [-h] [-p PEP_ALIGNMENT_FASTA]
                                 [-c CDS_ALIGNMENT_FASTA] [--trim_gappy TRIM_GAPPY]
